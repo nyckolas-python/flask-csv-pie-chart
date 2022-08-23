@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "flask-csv-pie-chart"
+version = "0.1.0"
+description = ""
+authors = ["nyckolas <nyckolas.python@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pandas = "^1.4.3"
+pandas-sql = "^0.1.10"
+Flask = "^2.2.2"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
