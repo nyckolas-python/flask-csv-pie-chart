@@ -3,47 +3,82 @@
 
 {% block scripts %}
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-  google.charts.load("current", {packages:["corechart"]});
-  google.charts.setOnLoadCallback(drawChart);
-  function drawChart() {
-	var data = google.visualization.arrayToDataTable([
-		{% for key, value in data.items() %}
-			{% if value is string %}
-				['{{ key }}', '{{ value }}'],
-			{% else %}
-				['{{ key }}', {{ value }}],
-			{% endif %}
-		{% endfor %}
-	]);
-
-	var options = {
-	  title: 'My Daily Activities',
-	  is3D: true,
-	  //pieHole: 0.5
-	  pieStartAngle: 100
-	  /*slices: {  
-		2: {offset: 0.2},
-		3: {offset: 0.3}
-	  }*/
-	  /*slices: {
-		1: { color: 'transparent' }
-	  }*/
-	};
-
-	var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-	chart.draw(data, options);
-  }
-</script>
 
 {% endblock %}
 
 {% block content %}
 
-<div style="margin: 10px 0 0 10px;width: 1000px">
-	<h3>Python Flask Show Data on Google Pie Chart</h3>
-	<div id="piechart_3d" style="width: 900px; height: 500px;"></div>
+<div class="container bgcont center-block" style="max-width: 1340px;">
+	<div class="row background-row">
+		<div class="centered-top">
+			<div class="input-group-sm mb-3">
+				{% for label in labels %}
+				<button class="btn btn-outline-primary" id="{{ label }}" type="button" onClick="onClickHandler(this)">{{ label }}</button>
+				{% endfor %}
+			</div>
+
+			<div style="width: 49%; height: auto; float: left; margin: 5px;">
+				<canvas id="all-months-chart"></canvas>
+			</div>
+			<script>
+				const labels2 = {{ labels|safe }};
+				const data2 = {
+				labels: labels2,
+				datasets: [{
+				label: 'Total per Month',
+				data: {{  data|safe }},
+				backgroundColor: [
+				'rgba(255, 99, 132, 0.2)',
+				'rgba(255, 159, 64, 0.2)',
+				'rgba(255, 205, 86, 0.2)',
+				'rgba(75, 192, 192, 0.2)',
+				'rgba(54, 162, 235, 0.2)',
+				'rgba(153, 102, 255, 0.2)',
+				'rgba(201, 203, 207, 0.2)'
+				],
+				borderColor: [
+				'rgb(255, 99, 132)',
+				'rgb(255, 159, 64)',
+				'rgb(255, 205, 86)',
+				'rgb(75, 192, 192)',
+				'rgb(54, 162, 235)',
+				'rgb(153, 102, 255)',
+				'rgb(201, 203, 207)'
+				],
+				borderWidth: 1
+				}]
+				};
+				const config2 = {
+				type: 'bar',
+				data: data2,
+				options: {
+					scales: {
+					y: {
+					beginAtZero: true
+					}
+					}
+				},
+				};
+				const config = {
+					type: 'line',
+					data: data,
+					options: {
+					  interaction: {
+						mode: 'index',
+						intersect: false,
+					  }
+					}
+				  };
+				const myChart2 = new Chart(
+				document.getElementById('all-months-chart'),
+				config2
+				);
+			</script>
+			<div style="width: 49%; height: auto; float: left; margin: 5px;">
+				<canvas id="one-month-chart"></canvas>
+			</div>
+		</div>
+	</div>
 </div>
 
 {% endblock %}
