@@ -25,7 +25,7 @@ $ poetry update
 ```
 $ make start
 # or
-$ poetry run python app.py
+$ poetry run python wsgi.py
 ```
 5. Deploy on Heroku, you need have an account on heroku.com
 ```
